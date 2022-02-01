@@ -1,0 +1,6 @@
+<div *ngIf="messageText && formattedUrls" class=" flex flex-col">
+    <div *ngFor="let formattedUrl of formattedUrls">
+        <app-invite-embed [mine]="mine" [url]="formattedUrl.url" *ngIf="formattedUrl.type=='invite'"></app-invite-embed>
+        <app-youtube-embed [mine]="mine" [url]="formattedUrl.url"  *ngIf="formattedUrl.type=='youtube'"></app-youtube-embed>
+    </div>
+</div>

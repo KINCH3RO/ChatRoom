@@ -1,0 +1,23 @@
+<div *ngIf="chatRoom | async as chatroom"  class="w-96  bg-gray-100 dark:bg-gray-900 shadow rounded-md  mb-2">
+    <div class=" w-full bg-blue-200  rounded-t-md  p-3 text-sm font-semibold  "  [ngClass]="mine ? 'dark:bg-gray-800':'dark:bg-gray-700'">CHATROOM INVITE</div>
+    <div class="flex justify-between p-4">
+        <div class="flex">
+
+
+            <div class="w-10 h-11 mr-4 ">
+                <img [ngClass]="chatroom.thumbnailUrl?'':'bg-blue-600 dark:bg-blue-500 '"
+                    class="rounded-full  capitalize object-cover w-full h-full flex flex-col justify-center text-center text-white text-lg font-semibold"
+                    [src]="chatroom.thumbnailUrl" [alt]="chatroom.name[0]" >
+            </div>
+            <div class="text-lg font-semibold my-auto">
+                <span>{{chatroom.name}}</span>
+            </div>
+        </div>
+        <button [routerLink]="'/app/invite/'+chatroom._id"  class="px-6 py-2 text-base my-auto rounded-sm font-semibold  bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 text-white transition">
+            Join
+        </button>
+    
+    </div>
+   
+   
+</div>

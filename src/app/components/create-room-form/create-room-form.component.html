@@ -1,0 +1,99 @@
+<div [ngClass]="{'hide-margin':!show}"
+    class="actual-margin fixed w-screen h-screen  z-10 flex flex-col justify-center transition-all duration-500 ">
+    <div class="w-full h-full transparent-back fixed z-20 " (click)="show=false"></div>
+    <div class="p-8  mx-auto rounded-md shadow-sm bg-white dark:bg-gray-800 w-1/2 z-30">
+        <div class="flex justify-between w-full gap-11">
+            <div class="flex flex-col ">
+                <div>
+                    <div class="text-lg font-bold font-sans">{{editMode?'Update Chat Room':'Create Chat Room'}} </div>
+                    <div class="text-xs  font-bold text-gray-800 dark:text-gray-300">{{editMode?'Your Chat Room
+                        Picture':' Customize your Chat
+                        Room with a
+                        Picture'}} </div>
+                </div>
+
+                <div class="my-auto mx-auto">
+                    <input (change)="onFileSelected($event)" type="file" id="file" class="hidden">
+                    <div *ngIf="photoProgress">
+                        <svg class="animate-spin  h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                    </div>
+                    <img (click)="openFile()" *ngIf="photoUrl && !photoProgress"
+                        class="w-28 h-28 my-auto mx-auto object-cover shadow-sm rounded-full cursor-pointer hover:opacity-75 duration-500"
+                        [src]="photoUrl" alt="" loading="lazy" srcset="">
+                    <svg (click)="openFile()" *ngIf="!photoUrl   && !photoProgress" xmlns="http://www.w3.org/2000/svg"
+                        width="75" height="75" fill="currentColor"
+                        class="cursor-pointer hover:text-blue-700 dark:hover:text-blue-500 duration-500 "
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+                        <path
+                            d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                    </svg>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col flex-1">
+                <form [formGroup]="createRoomForm" action="" class=" log-in-form flex flex-col">
+                    <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100" for="">
+                        <span>Name</span>
+                        <span *ngIf="(name?.dirty || name?.touched) && name?.errors" class="text-red-500">
+                            <span *ngIf="name?.errors?.required"> - name is Required</span>
+                            <span *ngIf="name?.errors?.incorrect"> - name already exist</span>
+                        </span>
+                    </label>
+                    <input
+                        class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-400  text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                        placeholder="The whezels" formControlName="name" type="text">
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                        <span>Description</span>
+
+                    </label>
+                    <textarea
+                        class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                        placeholder="this chat room is about ..." formControlName="description"></textarea>
+                    <button *ngIf="!editMode" (click)="createRoom()"
+                        class=" flex justify-center  bg-blue-500 hover:bg-blue-800 transition p-3 font-sans text-sm font-bold text-white rounded-md my-2">
+                        <svg *ngIf="progress" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span>Create Room</span>
+
+                    </button>
+
+                    <button *ngIf="editMode" (click)="saveRoom()"
+                        class=" flex justify-center  bg-blue-500 hover:bg-blue-800 transition p-3 font-sans text-sm font-bold text-white rounded-md my-2">
+                        <svg *ngIf="progress" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span>Save</span>
+
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>

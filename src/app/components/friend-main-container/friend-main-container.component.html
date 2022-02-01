@@ -1,0 +1,65 @@
+<div (click)="setContextMenuVisibility(true)" (mouseleave)="setContextMenuVisibility(false)" *ngIf="user && user._id!=user_id"
+class="p-5 mb-4 rounded-md bg-gray-300 dark:bg-gray-800 ">
+<div class="flex justify-between">
+    <div class="flex">
+        <div class="mr-4 h-12 w-12 ">
+            <img *ngIf="user.thumbnailUrl" class="h-full w-full rounded-full shadow object-cover"
+                [src]="user.thumbnailUrl" alt="" srcset="">
+            <div *ngIf="!user.thumbnailUrl"
+                class="bg-blue-500 w-full h-full rounded-full text-center flex flex-col justify-center capitalize">
+                <span>{{user.username[0]}}</span>
+            </div>
+        </div>
+
+        <div>
+            <div class="text-base font-semibold">{{user.username}}</div>
+            <div *ngIf="userPesence | async as presence">
+                <div  *ngIf="presence =='offline'" class="text-xs font-bold text-gray-500 ">Offline</div>
+                <div  *ngIf="presence =='online'" class="text-xs font-bold text-green-600 dark:text-green-500 ">Online</div>
+            </div>
+            
+        </div>
+
+        <div *ngIf="!search && friendStatus.status !='accepted'" class="status ml-4">
+            <span [ngClass]="friendStatus.status=='pending'?'bg-blue-500':'bg-red-800'"
+                class="my-auto px-4 py-2  rounded-full text-xs font-bold">{{friendStatus.status}}</span>
+        </div>
+    </div>
+
+    <div *ngIf="friendStatus && friendStatus.status=='accepted' || search"  class="action-buttons">
+        <button (contextmenu)="openMenu($event)"
+            class="dark:bg-gray-900  dark:hover:bg-gray-900/50 bg-gray-400 hover:bg-gray-500 cursor-pointer rounded-full">
+            <span class="material-icons w-12 h-12   text-center flex flex-col justify-center">
+                more_vert
+            </span>
+            <div [ngStyle]="{'left':contextMenuPosition[0] +'px' ,'top':contextMenuPosition[1]+'px'}"
+                *ngIf="showContextMenu" class="absolute -ml-36">
+                <app-user-drop-down (OnAction)="setContextMenuVisibility(false)" (OnAdd)="emitReload()" (OnRemove)="emitReload()" 
+                    [userId]="user._id"></app-user-drop-down>
+            </div>
+        </button>
+
+    </div>
+
+    <div *ngIf="friendStatus && friendStatus.status =='pending'" class="action-buttons flex gap-4">
+        <button  (click)="removeFriendRequest(user._id)" class="dark:bg-gray-900  dark:hover:bg-gray-900/50 bg-gray-400 hover:bg-gray-500 cursor-pointer rounded-full
+            w-12 h-12   text-center flex flex-col justify-center">
+            <span class="material-icons-outlined ">
+                close
+            </span>
+        </button>
+
+        <button (click)="acceptFriendRequest(user._id)" *ngIf="friendStatus.sentByMe=='false'"
+            class="dark:bg-gray-900  dark:hover:bg-gray-900/50 bg-gray-400 hover:bg-gray-500 cursor-pointer rounded-full
+        w-12 h-12   text-center flex flex-col justify-center">
+            <span class="material-icons-outlined ">
+                done
+            </span>
+        </button>
+
+    </div>
+
+
+</div>
+
+</div>

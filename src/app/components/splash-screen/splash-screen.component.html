@@ -1,0 +1,8 @@
+<div   *ngIf="show" [@fadeState]="fadeState" (@fadeState.done)="setVisibility($event)"   class="banner bg-white  dark:bg-gray-900 h-screen w-screen fixed z-50 flex justify-center">
+    <div class="logo my-auto w-20 h-20 animate-bounce">
+        <img *ngIf="!isDark()" class="mb-3  " src=" assets/logos/logo.png"
+            alt="">
+        <img *ngIf="isDark()" class="mb-3  " src="assets/logos/logo-dark.png" alt="">
+    </div>
+
+</div>

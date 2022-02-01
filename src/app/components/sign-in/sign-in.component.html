@@ -1,0 +1,132 @@
+<button (click)="toggleDark()" class="fixed  m-5 shadow-md rounded-md hover:bg-gray-700 hover:text-gray-200 bg-gray-800 text-white p-3 transition-colors  duration-700
+dark:bg-gray-200 dark:text-gray-700 dark:hover:bg-gray-400 ">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="" viewBox="0 0 16 16">
+        <path
+            d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+    </svg>
+</button>
+<div
+    class=" transition-colors z-10 wrapper dark:bg-gray-900  bg-blue-100 w-screen h-screen custom_backgroud flex flex-col justify-center">
+
+    <div class=" w-full md:w-1/2 h-full md:h-auto  mx-auto rounded-xl shadow  flex bg-white dark:bg-gray-800">
+        <div
+            class=" bg-indigo-50 dark:bg-gr rounded-l-xl banner hidden md:flex w-full md:w-1/2 md:flex-col justify-center  ">
+            <div class="p-8 rounded-l-xl">
+                <h1 class="font-sans text-sm font-bold text-blue-500">Chat Room.</h1>
+                <p class="text-xs font-semibold text-gray-600  mb-20">a place where you can share and communicate for
+                    free
+                </p>
+            </div>
+
+            <img class="mb-2" src="assets\pictures\banner-2.png" alt="">
+        </div>
+        <div class=" form-wrapper w-full  md:w-1/2  px-5 py-8 flex flex-col ">
+            <p class="text-sm font-semibold  text-gray-600 dark:text-gray-200 ">Welcome</p>
+            <h2 class="font-semibold text-xl text-gray-700 dark:text-gray-100">{{isSignUp ?'Sign up to Chat Room' :'Log
+                in to Chat Room'}}
+            </h2>
+            <h3 class="text-sm font-semibold mb-10">{{isSignUp ?'Member Already ? ' :'New Member ? '}}
+                <button routerLink="/signin" *ngIf="isSignUp" class="text-blue-500 text-sm font-semibold" href="">Log
+                    in</button>
+                <button routerLink="/signup" *ngIf="!isSignUp" class="text-blue-500 text-sm font-semibold" href="">Sign
+                    up</button>
+            </h3>
+            <form [formGroup]="signInForm" *ngIf="!isSignUp" action="" class=" log-in-form flex flex-col">
+                <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100" for="">
+                    <span>Email</span>
+                    <span *ngIf="(email?.dirty || email?.touched) && email?.errors" class="text-red-500">
+                        <span *ngIf="email?.errors?.required"> - Email is Required</span>
+                        <span *ngIf="email?.errors?.email"> - Email is Invalid</span>
+                        <span *ngIf="email?.errors?.incorrect"> - Email or Password is Invalid</span>
+                    </span>
+                </label>
+                <input
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-400  text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="example@example.com" formControlName="email" type="text">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                    <span>Password</span>
+                    <span *ngIf="(password?.dirty || password?.touched) && password?.errors" class="text-red-500">
+                        <span *ngIf="password?.errors?.required"> - Password is Required</span>
+                        <span *ngIf="password?.errors?.incorrect"> - Email or Password is Invalid</span>
+                    </span>
+                </label>
+                <input
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="your password" formControlName="password" type="password">
+                <button (click)="login()"
+                    class=" flex justify-center mt-10 bg-blue-500 hover:bg-blue-800 transition p-3 font-sans text-sm font-bold text-white rounded-md my-2">
+                    <svg *ngIf="progress" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg> Log in</button>
+
+            </form>
+
+            <form [formGroup]="signUpForm" *ngIf="isSignUp" action="" class=" signup-form flex flex-col">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                    <span>Username</span>
+                    <span *ngIf="(username?.dirty || username?.touched) && username?.errors" class="text-red-500">
+                        <span *ngIf="username?.errors?.required"> - Username is Required</span>
+                        <span *ngIf="username?.errors?.minlength"> - Username min charachters is 3 </span>
+                        <span *ngIf="username?.errors?.exist"> - Username already exist </span>
+
+                    </span>
+                </label>
+                <input formControlName="username"
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm  border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="example@example.com" type="text">
+
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                    <span>Email </span>
+                    <span *ngIf="(email_s?.dirty || email_s?.touched) && email_s?.errors" class="text-red-500">
+                        <span *ngIf="email_s?.errors?.required"> - Email is Required</span>
+                        <span *ngIf="email_s?.errors?.email"> - Email is Invalid </span>
+                        <span *ngIf="email_s?.errors?.exist"> - Email already exist </span>
+
+                    </span>
+                </label>
+                <input formControlName="email"
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm  border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="example@example.com" type="text">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                    <span>Password </span>
+                    <span *ngIf="(password_s?.dirty || password_s?.touched) && password_s?.errors" class="text-red-500">
+                        <span *ngIf="password_s?.errors?.required"> - Password is Required</span>
+                    </span>
+                </label>
+                <input formControlName="password"
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm  border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="your password" type="password">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-100" for="">
+                    <span>Date of birth </span>
+                    <span *ngIf="(birth?.dirty || birth?.touched) && birth?.errors" class="text-red-500">
+                        <span *ngIf="birth?.errors?.required"> - Date is Required</span>
+                    </span>
+                </label>
+                <input formControlName="birth"
+                    class="px-5 py-2 rounded-md my-2 border-2 outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm  border-gray-400 text-gray-600 dark:text-gray-200 dark:bg-gray-800"
+                    placeholder="your password" type="date">
+
+
+                <button (click)="signUp()"
+                    class="flex justify-center bg-blue-500 hover:bg-blue-800 transition p-3 font-sans text-sm font-bold text-white rounded-md my-2">
+                    <svg *ngIf="progress" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+
+                    Sign Up
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>

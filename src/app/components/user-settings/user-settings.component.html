@@ -1,0 +1,86 @@
+<div *ngIf="userData" class="w-full ">
+    <div class="header">
+        <h1 class="text-xl font-semibold font-sans mb-1">User Settings</h1>
+
+    </div>
+
+    <div class="sep h-1 w-full border-b my-6 dark:border-gray-500"></div>
+
+
+    <div class="flex my-2">
+        <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100 w-44 my-auto mr-36" for="">
+            <span>Profile picture</span>
+
+        </label>
+        <div class="h-24 w-24 shadow-md relative rounded-full">
+             <input (change)="uploadFile($event)" #file class="hidden" type="file">
+            <div *ngIf="!uploadingFile" (click)="clickFile()" class="absolute w-full h-full rounded-full text-white bg-black/25 text-xs font-bold flex flex-col justify-center opacity-0 hover:opacity-100 transition cursor-pointer">
+                <div class="text-center" >Change avatar</div>
+            </div>
+
+            <div *ngIf="uploadingFile" (click)="clickFile()" class="absolute w-full h-full rounded-full text-white bg-blue-500 text-xs font-bold flex flex-col justify-center">
+                <svg class="animate-spin mx-auto  h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+            </div>
+
+            <img *ngIf="!uploadingFile" class="w-full h-full object-cover rounded-full capitalize  flex flex-col text-white justify-center text-center text-xl " [ngClass]="thumbnailUrl ? '':'bg-blue-500'"
+                [src]="thumbnailUrl" [alt]="username[0]" srcset="">
+        </div>
+
+    </div>
+    <div class="sep h-1 w-full border-b my-6 dark:border-gray-500"></div>
+    <div class=" log-in-form flex flex-col">
+        <div class="flex my-2">
+            <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100 w-44 my-auto mr-36" for="">
+                <span>Username</span>
+
+            </label>
+            <input [(ngModel)]="username" (input)="checkChanges()"
+                class="w-2/5 px-5 py-2 rounded-md my-2 border outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-300 dark:border-gray-500  text-gray-600 dark:text-gray-200 dark:bg-gray-900"
+                type="text">
+        </div>
+
+        <div class="flex my-2">
+            <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100 w-44 my-auto mr-36" for="">
+                <span>Email</span>
+
+            </label>
+            <input [(ngModel)]="email" (input)="checkChanges()"
+                class="w-2/5 px-5 py-2 rounded-md my-2 border outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-300 dark:border-gray-500  text-gray-600 dark:text-gray-200 dark:bg-gray-900"
+                type="text">
+        </div>
+
+
+        <div class="sep h-1 w-full border-b my-6 dark:border-gray-500"></div>
+
+        <div class="flex my-2">
+            
+            <label class="text-sm font-semibold  text-gray-700 dark:text-gray-100 w-44 my-auto mr-36" for="">
+                <span>Current password</span>
+
+            </label>
+            <input [(ngModel)]="password"
+                class="w-2/5 px-5 py-2 rounded-md my-2 border outline-none hover:border-blue-500 focus:border-blue-500 transition font-semibold text-sm border-gray-300 dark:border-gray-500  text-gray-600 dark:text-gray-200 dark:bg-gray-900"
+                type="password">
+        </div>
+
+        <div class="sep h-1 w-full border-b my-6 dark:border-gray-500"></div>
+
+        <div *ngIf="changed" class="w-full flex justify-end ">
+            <button (click)="Cancel()" class="px-4 py-3 font-semibold text-sm bg-white dark:bg-gray-900 border border-gray-300  dark:border-gray-500 text-gray-700  dark:text-white rounded-lg  mr-3 hover:bg-gray-200 dark:hover:bg-gray-700 transition"> Cancel </button>
+
+            <button (click)="save()"
+                class="px-4 py-3 font-semibold text-sm bg-blue-500 rounded-lg text-white hover:bg-blue-700 transition">
+                Update infos
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>

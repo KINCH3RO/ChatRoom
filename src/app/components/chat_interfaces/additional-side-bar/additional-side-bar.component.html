@@ -1,0 +1,28 @@
+<app-create-room-form (reload)="reload()" [chatRoom]="selectedChatRoom" [show]=showCreateForm>
+</app-create-room-form>
+<app-confirmation-dialogue *ngIf="!privateChat" (OnAccept)="DeleteChatRoom()" [show]=showDeleteForm
+    headerText="Delete Chat Room" buttonText="Delete chatRoom" [targetText]="selectedChatRoom" [text]="deleteText">
+</app-confirmation-dialogue>
+<div class="flex h-full ">
+    <div class="h-full">
+        <button *ngIf="!privateChat" (click)="ShowCreateForm();"
+            class="p-3 text-sm font-bold bg-blue-500 text-white  fixed w-96  h-12 hover:bg-blue-700 transition-colors  ">Create
+            your own Chat Room</button>
+
+        <div *ngIf="!privateChat"
+            class=" w-96 pt-12 h-full border-r border-gray-300 max-h-f dark:border-gray-500  overflow-x-hidden bg-white dark:bg-gray-900  ">
+            <app-chat-room-container (ShowEdit)="showEditForm($event)" (ShowDelete)="ShowDeleteForm($event)"
+                *ngFor="let chatRoom of ChatRooms" [chatroom]="chatRoom"></app-chat-room-container>
+        </div>
+
+        <div *ngIf="privateChat"
+            class=" w-96  h-full border-r border-gray-300 max-h-f dark:border-gray-500  overflow-x-hidden bg-white dark:bg-gray-900  ">
+            <app-friend-container [privateChatroom]="chatRoom" *ngFor="let chatRoom of privateChatRooms; let index=index">
+            </app-friend-container>
+        </div>
+
+
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

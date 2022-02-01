@@ -1,0 +1,70 @@
+<div class="bg-white dark:bg-gray-900 w-full h-full px-7 py-7">
+
+    <h1 class="text-2xl font-semibold mb-6">Friends</h1>
+
+    <div class="buttons flex border-b dark:border-gray-500 mb-4">
+        <button [ngClass]="currentPage=='all'?'text-gray-900 border-blue-500 dark:text-white':'f'"
+            (click)="setCurrentPage('all')" class="px-4 py-4  text-sm font-bold
+         font-sans border-b-[3px] hover:border-blue-500 border-transparent  -mb-0.5 transition-colors mr-2
+         hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-400" routerLinkActive="">
+            All
+        </button>
+
+        <button [ngClass]="currentPage=='pending'?'text-gray-900 border-blue-500 dark:text-white':'f'"
+            (click)="setCurrentPage('pending')" class="px-4 py-4  text-sm font-bold
+        font-sans border-b-[3px] hover:border-blue-500 border-transparent  -mb-0.5 transition-colors mr-2
+        hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-400">
+            Pending
+        </button>
+
+        <!-- <button [ngClass]="currentPage=='blocked'?'text-gray-900 border-blue-500 dark:text-white':'f'"
+            (click)="setCurrentPage('blocked')" class="px-4 py-4  text-sm font-bold
+        font-sans border-b-[3px] hover:border-blue-500 border-transparent  -mb-0.5 transition-colors mr-2
+        hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-400">
+            Blocked
+        </button> -->
+
+        <button [ngClass]="currentPage=='search'?'text-gray-900 border-blue-500 dark:text-white':'f'"
+            (click)="setCurrentPage('search')" class="px-4 py-4  text-sm font-bold
+        font-sans border-b-[3px] hover:border-blue-500 border-transparent  -mb-0.5 transition-colors mr-2
+        hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-400">
+            Search
+        </button>
+    </div>
+
+    <div *ngIf="currentPage=='search'" class="searchPanel mb-4">
+
+        <div
+            class="search w-2/3 mx-auto border dark:border-blue-500/10 border-blue-500/30  rounded-md bg-white dark:bg-gray-800 p-5 flex">
+            <span class="material-icons mr-5">
+                search
+            </span>
+            <input [(ngModel)]="searchValue" (input)="search()"
+                class="flex-1  font-semibold bg-white dark:bg-gray-800 outline-none" type="text"
+                placeholder="Search for your friends by User name ">
+        </div>
+
+        <div class="sep h-1 w-full my-4 border-b"></div>
+
+        <div *ngFor="let user of searchUsers|async; let i = index">
+            <app-friend-main-container [user]="user" [search]="true" ></app-friend-main-container>
+        </div>
+
+
+    </div>
+
+    <div *ngIf="currentPage!='search' && userObservable |async as currentUser" class="friends-list w-full">
+        <div *ngFor="let friend of currentUser.friends ; let i =index">
+            <div *ngIf="friend.userData ">
+                <app-friend-main-container (reloadFriendList)="reloadFriendsList()"  *ngIf="currentPage=='all'" [friendStatus]="friend" [user]="friend.userData" [search]="false" ></app-friend-main-container>
+                <app-friend-main-container (reloadFriendList)="reloadFriendsList()" *ngIf="friend.status==currentPage" [friendStatus]="friend" [user]="friend.userData" [search]="false" ></app-friend-main-container>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>

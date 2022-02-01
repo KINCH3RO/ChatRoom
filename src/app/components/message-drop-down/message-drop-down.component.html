@@ -1,0 +1,31 @@
+<div class="z-50 shadow rounded-md bg-white dark:bg-gray-800  px-2 max-w-max z-50 ">
+    <div class="  cursor-pointer transition  text-gray-600 dark:text-gray-300 ">
+
+        <div (click)="edit()" class="flex py-2 px-1 hover:text-blue-500 dark:hover:text-blue-500">
+            <div class=" flex flex-col justify-center text-sm   font-bold w-36 mr-4 truncate ">
+                <span class="text-left">Edit Message </span>
+            </div>
+            <span class="material-icons text-[22px]   my-auto text-right">edit</span>
+        </div>
+
+        <div (click)="deleteM()" class="flex py-2 px-1 hover:text-red-500 dark:hover:text-red-500">
+            <div class=" flex flex-col justify-center text-sm   font-bold w-36 mr-4 truncate ">
+                <span class="text-left">Delete Message </span>
+            </div>
+            <span class="material-icons text-[22px]   my-auto text-right">delete</span>
+        </div>
+
+        <div class="sep h-1 w-full my-[0.5px] border-b dark:border-gray-700"></div>
+
+        <div (click)="copyMessage()" class="flex py-2 px-1 hover:text-blue-500 dark:hover:text-blue-500">
+            <div class=" flex flex-col justify-center text-sm   font-bold w-36 mr-4 truncate ">
+                <span class="text-left">Copy message</span>
+            </div>
+            <span class="material-icons text-[22px]   my-auto text-right">content_copy</span>
+        </div>
+
+
+
+    </div>
+    <div class="sep h-1 w-full my-[0.5px] "></div>
+</div>

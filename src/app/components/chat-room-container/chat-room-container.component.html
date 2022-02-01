@@ -1,0 +1,37 @@
+<div  (contextmenu)="setPosition($event)" (mouseleave)="ShowContextMenu(false)"
+    routerLinkActive="bg-blue-100 dark:bg-blue-900/20" (isActiveChange)="CheckIfSelected($event)"
+    [routerLink]="['chat',chatroom._id]" class="container_ bg-gray-50 dark:bg-gray-800  flex 
+  border-b dark:border-gray-500 p-4 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-700 transition-colors">
+
+  <div class="w-14 h-14  mr-4">
+    <img class=" capitalize w-14 h-14 my-auto rounded-full shadow object-cover text-xl flex flex-col justify-center text-center font-semibold"
+    [ngClass]="chatroom.photoUrl?'':'bg-blue-500'" [src]="chatroom.thumbnailUrl" [alt]="chatroom.name[0]">
+  </div>
+   
+
+    <div class="flex flex-col flex-1">
+        <div class="first_row flex justify-between">
+            <div class="div flex m">
+
+                <div class="h-full text-md font-semibold text-gray-700 font-sans dark:text-gray-300 ">{{chatroom.name}}
+                </div>
+            </div>
+            <div *ngIf="!selected && messageCount>0 "
+                class="indicator flex justify-center w-[18px] h-[18px] rounded-full shadow bg-red-700 text-xs font-semibold ">
+                <span> {{messageCount}}</span>
+            </div>
+        </div>
+        <div class="Second_row font-semibold text-sm font-sans  text-gray-400 justify-between flex mt-2">
+            <div class="message text-ellipsis truncate  w-2/3 ">{{lastMessage.name}} : {{lastMessage.text}}</div>
+            <div class="message">{{lastMessage.send_date | date:'shortTime'}}</div>
+        </div>
+    </div>
+
+    <div [ngStyle]="{'left':left +'px' ,'top':top+'px'}" *ngIf="showContextMenu" class="absolute">
+        <app-chatroom-drop-down [chatRoom]="chatroom" (OnAction)="ShowContextMenu(false)" (OnInviteLink)="CopyInviteToClipBoard()" (OnEdit)="openEditModal()" (OnDelete)="openDeleteModal()"></app-chatroom-drop-down>
+    </div>
+
+
+
+
+</div>

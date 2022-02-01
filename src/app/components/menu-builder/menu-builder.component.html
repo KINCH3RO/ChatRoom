@@ -1,0 +1,20 @@
+<div *ngIf="props" class=" shadow rounded-md bg-white dark:bg-gray-800  px-2 max-w-max z-50 ">
+    <div (click)=prop.click() *ngFor="let prop of props.elements ;let i =index"
+        class="  cursor-pointer transition hover:text-blue-500 dark:hover:text-blue-500 text-gray-600 dark:text-gray-300 ">
+
+        <div *ngIf="prop.type=='button'" class="flex py-2 px-1  ">
+            <div class=" flex flex-col justify-center text-sm   font-bold w-36 mr-4 truncate ">
+                <span [innerText]="prop.text" class="text-left"></span>
+            </div>
+            <span *ngIf="prop.icon" class="material-icons text-[22px]   my-auto text-right"
+                [innerText]="prop.icon"></span>
+        </div>
+
+        <div *ngIf="prop.type=='sep'" class="sep h-1 w-full my-[0.5px] border-b dark:border-gray-700"></div>
+
+        <div *ngIf="prop.type=='custom'" [innerHTML]="prop.html"></div>
+
+
+    </div>
+    <div class="sep h-1 w-full my-[0.5px] "></div>
+</div>

@@ -1,0 +1,22 @@
+<div *ngIf="src && videoData | async as vidData" class="w-[457px]  ">
+    <div class=" w-full bg-blue-200 rounded-md  shadow  " [ngClass]="mine  ? 'dark:bg-gray-800':'dark:bg-gray-700'">
+        <div class="flex justify-between p-3">
+            <div class="flex w-2/3 ">
+                <span class="font-semibold mr-2 " [innerText]="vidData.channel"> </span>
+                <span [innerText]="vidData.title"
+                    class="dark:text-gray-400 text-gray-700 font-semibold text-xs my-auto truncate"></span>
+            </div>
+            <div class=" actionButton flex  ">
+                <span class="text-red-800 font-semibold">Youtube</span>
+
+
+            </div>
+        </div>
+        <div class="w-full">
+            <iframe class="w-full h-64" [src]="src | safe" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+
+</div>

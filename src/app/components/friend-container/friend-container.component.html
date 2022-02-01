@@ -1,0 +1,36 @@
+<div *ngIf="user | async as user"  (isActiveChange)="CheckIfSelected($event)"
+[routerLink]="['privateChat',user._id]" (contextmenu)="setPosition($event)" (mouseleave)="ShowContextMenu(false)"
+    routerLinkActive="bg-blue-100 dark:bg-blue-900/20" class="container_ bg-gray-50 dark:bg-gray-800  flex 
+  border-b dark:border-gray-500 p-3 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-700 transition-colors">
+ 
+  <div class="w-10 h-10 mr-6 relative">
+    <img class="capitalize w-10 h-10 my-auto rounded-full shadow  object-cover text-xl flex flex-col justify-center text-center font-semibold"
+    [ngClass]="user.thumbnailUrl?'':'bg-blue-500'" [src]="user.thumbnailUrl" [alt]="user.username[0]">
+    <!-- user Presence indicator -->
+    <div *ngIf="userPesence | async as presence" class="absolute right-0 bottom-0">
+        <div *ngIf="presence=='online'" class="w-[10px] h-[10px] bg-green-500 rounded-full  "></div>
+    </div>
+  </div>
+   
+
+    <div class="flex flex-col flex-1 my-auto">
+        <div class="first_row flex justify-between">
+            <div class="div flex flex-col justify-between">
+                <div class="h-full text-lg font-semibold text-gray-700 font-sans dark:text-gray-300 ">{{user.username}}
+                </div>
+            </div>
+
+            <div *ngIf="!selected && messageCount>0 "
+                class="indicator flex justify-center w-[18px] h-[18px] rounded-full my-auto shadow bg-red-700 text-xs font-semibold ">
+                <span> {{messageCount}}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div [ngStyle]="{'left':left +'px' ,'top':top+'px'}" *ngIf="showContextMenu" class="absolute">
+        <app-user-drop-down [userId]="user._id"> </app-user-drop-down>
+    </div>
+
+</div>
