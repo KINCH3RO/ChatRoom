@@ -2,6 +2,14 @@
 
 Chat Room is Web application where you can find friends,chat,share files,images,audio, videos privately using direct messages or publicly using a chatroom all in realtime. 
 
+Built using alot of technologies just to name a few :
+ - MongoDB
+ - Express
+ - Angular
+ - Node.js
+ - JWT
+
+
 ## Disclaimer
 
 this project made only for education purposes.
